@@ -24,7 +24,6 @@ def step_enter_valid_credential(context):
     context.browser.find_element(By.NAME, "password").send_keys(password) 
 
     
-
 @when(u'clicar no botão Login')
 def step_click_button_login(context):
     context.browser.find_element(By.XPATH, '//*[@id="root"]/main/form/button').submit()

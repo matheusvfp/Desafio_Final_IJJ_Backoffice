@@ -4,7 +4,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from faker import Faker
-import time
+import random
+
 
 
 
@@ -26,21 +27,21 @@ def step_impl(context):
     wait.until(EC.visibility_of_element_located((By.XPATH, '//button[normalize-space(text())="Adicionar"]'))).click()
 
 
-
 @when(u'preenche o formulário com os dados do produto')
 def step_impl(context):
     fake = Faker()
     wait = WebDriverWait(context.browser, 10)
 
-    
     product_name = fake.name()  
     product_description = fake.text()
     value = fake.random_number(digits=2)
     formatted_value = f"{value},00" 
     
     file_path = r"C:\Users\Matheus\Downloads\p1.png"
-    category = "Acessorios"
-    
+    categories = ["Roupas", "Calçados", "Acessórios"]
+
+    category = random.choice(categories)
+
     context.browser.find_element(By.NAME,'name').send_keys(product_name)
     context.browser.find_element(By.NAME, 'description').send_keys(product_description)
     wait.until(EC.visibility_of_element_located((By.XPATH, f"//label[contains(.,'{category}')]"))).click()

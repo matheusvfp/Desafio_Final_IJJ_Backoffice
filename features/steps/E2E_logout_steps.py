@@ -17,11 +17,12 @@ def step_impl(context):
 
 @when(u'quando clicar em Perfil na navbar')
 def step_impl(context):
-    time.sleep(2)
+    
     wait = WebDriverWait(context.browser, 10)
     actions = ActionChains(context.browser)
     
-    perfil_button = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="root"]/header/section[1]/div[1]/ul/li/strong/nav/div[1]/ul/li[1]')))
+    wait.until(EC.invisibility_of_element_located((By.CLASS_NAME, 'go3958317564')))
+    perfil_button = wait.until(EC.visibility_of_element_located((By.XPATH, "//button[contains(@class,'NavigationMenuTrigger')]")))
     actions.move_to_element(perfil_button).perform()
     
     data_state = perfil_button.get_attribute('data-state')
