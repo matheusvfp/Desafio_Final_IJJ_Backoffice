@@ -1,0 +1,46 @@
+from behave import given, when, then
+from selenium.webdriver import Firefox
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support import expected_conditions as EC
+import time
+
+@given(u'que o usuário esteja logado no sistema')
+def step_impl(context):
+    
+    wait = WebDriverWait(context.browser, 10)
+    nav_bar = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'NavigationMenuList')))
+    
+    assert nav_bar is not None, "Não está na página de Perfil"
+
+
+@when(u'quando clicar em Perfil na navbar')
+def step_impl(context):
+    time.sleep(2)
+    wait = WebDriverWait(context.browser, 10)
+    actions = ActionChains(context.browser)
+    
+    perfil_button = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="root"]/header/section[1]/div[1]/ul/li/strong/nav/div[1]/ul/li[1]')))
+    actions.move_to_element(perfil_button).perform()
+    
+    data_state = perfil_button.get_attribute('data-state')
+    if data_state != 'open':
+        perfil_button.click()
+    
+
+@when(u'clicar no Logout no drop list')
+def step_impl(context):
+    wait = WebDriverWait(context.browser, 10)
+    actions = ActionChains(context.browser)
+    
+    logout_button = wait.until(EC.visibility_of_element_located((By.XPATH, "//div[text()='LogOut']")))    
+    
+    actions.move_to_element(logout_button).click().perform()
+    
+
+@then(u'o sistema deverá redirecionar o usuário para a página de login')
+def step_impl(context):
+    wait = WebDriverWait(context.browser, 10)
+    button_login = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'sc-eqUAAy')))
+    assert 'Iniciar sessão' in button_login.text, "Botão não encontrado"
