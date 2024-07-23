@@ -1,7 +1,6 @@
-
 Feature: Cadastro de produto na Loja IJJ
 
-  Scenario: Cadastro de produtos
+    Scenario: Cadastro de produtos no sistema Backoffice
 
     Como usuário logado do sistema IJJ
     Eu quero cadastrar novos produtos

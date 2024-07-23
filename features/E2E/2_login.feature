@@ -1,7 +1,6 @@
-
 Feature: Login na página do Joga Junto
     
-    Scenario: Login na página da do sistema Backoffice 
+    Scenario: Login no sistema Backoffice 
 
     Como usuário credenciado do Instituto Joga Junto
     Eu quero acessar o sistema Backoffice

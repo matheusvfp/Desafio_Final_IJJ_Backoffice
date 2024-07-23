@@ -1,6 +1,6 @@
-
 Feature: Logout na página do Joga Junto
-    Scenario: Logout na página do Instituto Joga Junto
+
+    Scenario: Logout no sistema Backoffice
     
     Como usuário logado
     Eu quero deslogar do sistema
