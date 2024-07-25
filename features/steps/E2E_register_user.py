@@ -5,31 +5,43 @@ from faker import Faker
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-@given(u'que o usuário esteja na página de criação de conta')
-def step_open_create_acount(context):
-    context.browser.find_element(By.CLASS_NAME, 'register').click()
-    
 
-@when(u'o usuário preencher o formulário de criação com dados válidos')
+@given("que o usuário esteja na página de criação de conta")
+def step_open_create_acount(context):
+    context.browser.find_element(By.CLASS_NAME, "register").click()
+
+
+@when("o usuário preencher o formulário de criação com dados válidos")
 def fill_registration_form(context):
     fake = Faker()
-    
+
     user_email = fake.free_email()
     password = fake.password()
-    
-    wait = WebDriverWait(context.browser,10)
-    wait.until(EC.visibility_of_element_located((By.NAME, 'email'))).send_keys(user_email)
-    wait.until(EC.visibility_of_element_located((By.NAME, 'password'))).send_keys([password])
-    wait.until(EC.visibility_of_element_located((By.NAME, 'confirmPassword'))).send_keys([password])
-    
-@when(u'clicar no botão de criar conta')
+
+    wait = WebDriverWait(context.browser, 10)
+    wait.until(EC.visibility_of_element_located((By.NAME, "email"))).send_keys(
+        user_email
+    )
+    wait.until(EC.visibility_of_element_located((By.NAME, "password"))).send_keys(
+        [password]
+    )
+    wait.until(
+        EC.visibility_of_element_located((By.NAME, "confirmPassword"))
+    ).send_keys([password])
+
+
+@when("clicar no botão de criar conta")
 def click_create_account(context):
     context.browser.find_element(By.XPATH, '//*[@id="root"]/div/form/button').submit()
 
 
-@then(u'o sistema deverá exibir uma mensagem de sucesso indicando que a conta foi criada')
+@then(
+    "o sistema deverá exibir uma mensagem de sucesso indicando que a conta foi criada"
+)
 def verify_account_creation_success_message(context):
-    wait = WebDriverWait(context.browser,10)
-    
-    sucess = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'sucess')))
-    assert 'Usuário cadastrado com sucesso' in sucess.text, "Erro no cadastro de usuário"
+    wait = WebDriverWait(context.browser, 10)
+
+    sucess = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "sucess")))
+    assert (
+        "Usuário cadastrado com sucesso" in sucess.text
+    ), "Erro no cadastro de usuário"
