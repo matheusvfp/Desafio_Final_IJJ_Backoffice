@@ -10,11 +10,10 @@ import os
 
 @given("que o usuário está na página de cadastro de produtos")
 def step_page_register_product(context):
-    username = "usuario@example.com"
-    password = "senha123"
 
-    context.browser.find_element(By.NAME, "email").send_keys(username)
-    context.browser.find_element(By.NAME, "password").send_keys(password)
+
+    context.browser.find_element(By.NAME, "email").send_keys(context.user_email)
+    context.browser.find_element(By.NAME, "password").send_keys(context.password)
 
     context.browser.find_element(By.XPATH, '//*[@id="root"]/main/form/button').submit()
 
@@ -23,8 +22,7 @@ def step_page_register_product(context):
 def step_click_add_button(context):
     wait = WebDriverWait(context.browser, 10)
 
-    wait.until(
-        EC.visibility_of_element_located((By.XPATH, '//button[normalize-space(text())="Adicionar"]'))).click()
+    wait.until(EC.visibility_of_element_located((By.XPATH, '//button[normalize-space(text())="Adicionar"]'))).click()
 
 
 @when("preenche o formulário com os dados do produto")
@@ -38,13 +36,11 @@ def step_add_data_product(context):
     formatted_value = f"{value},00"
 
     file_path = os.path.abspath(os.path.join('media', 'p1.png'))
-    categories = ["Roupas", "Calçados", "Acessórios"]
-
-    category = random.choice(categories)
+    
 
     context.browser.find_element(By.NAME, "name").send_keys(product_name)
     context.browser.find_element(By.NAME, "description").send_keys(product_description)
-    wait.until(EC.visibility_of_element_located((By.XPATH, f"//label[contains(.,'{category}')]"))).click()
+    wait.until(EC.visibility_of_element_located((By.XPATH, "//label[contains(.,'Roupas')]"))).click()
     context.browser.find_element(By.NAME, "price").send_keys(formatted_value)
     context.browser.find_element(By.NAME, "shipment").send_keys(formatted_value)
 

@@ -15,11 +15,9 @@ def step_open_page(context):
 
 @when("inserir as credenciais válidas")
 def step_enter_valid_credential(context):
-    username = "usuario@example.com"
-    password = "senha123"
 
-    context.browser.find_element(By.NAME, "email").send_keys(username)
-    context.browser.find_element(By.NAME, "password").send_keys(password)
+    context.browser.find_element(By.NAME, "email").send_keys(context.user_email)
+    context.browser.find_element(By.NAME, "password").send_keys(context.password)
 
 
 @when("clicar no botão Login")

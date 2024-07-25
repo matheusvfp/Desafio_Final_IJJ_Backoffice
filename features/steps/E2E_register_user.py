@@ -13,17 +13,13 @@ def step_open_create_acount(context):
 
 @when("o usuário preencher o formulário de criação com dados válidos")
 def step_fill_registration_form(context):
-    fake = Faker()
-
-    user_email = fake.free_email()
-    password = fake.password()
-
-    wait = WebDriverWait(context.browser, 10)
-    wait.until(EC.visibility_of_element_located((By.NAME, "email"))).send_keys(user_email)
-
-    wait.until(EC.visibility_of_element_located((By.NAME, "password"))).send_keys(password)
     
-    wait.until(EC.visibility_of_element_located((By.NAME, "confirmPassword"))).send_keys(password)
+    wait = WebDriverWait(context.browser, 10)
+    wait.until(EC.visibility_of_element_located((By.NAME, "email"))).send_keys(context.user_email)
+
+    wait.until(EC.visibility_of_element_located((By.NAME, "password"))).send_keys(context.password)
+    
+    wait.until(EC.visibility_of_element_located((By.NAME, "confirmPassword"))).send_keys(context.password)
 
 
 @when("clicar no botão de criar conta")
