@@ -24,10 +24,7 @@ def step_impl(context):
     wait = WebDriverWait(context.browser, 10)
 
     wait.until(
-        EC.visibility_of_element_located(
-            (By.XPATH, '//button[normalize-space(text())="Adicionar"]')
-        )
-    ).click()
+        EC.visibility_of_element_located((By.XPATH, '//button[normalize-space(text())="Adicionar"]'))).click()
 
 
 @when("preenche o formulário com os dados do produto")
@@ -47,11 +44,7 @@ def step_impl(context):
 
     context.browser.find_element(By.NAME, "name").send_keys(product_name)
     context.browser.find_element(By.NAME, "description").send_keys(product_description)
-    wait.until(
-        EC.visibility_of_element_located(
-            (By.XPATH, f"//label[contains(.,'{category}')]")
-        )
-    ).click()
+    wait.until(EC.visibility_of_element_located((By.XPATH, f"//label[contains(.,'{category}')]"))).click()
     context.browser.find_element(By.NAME, "price").send_keys(formatted_value)
     context.browser.find_element(By.NAME, "shipment").send_keys(formatted_value)
 
@@ -63,11 +56,7 @@ def step_impl(context):
 def step_impl(context):
     wait = WebDriverWait(context.browser, 10)
 
-    wait.until(
-        EC.visibility_of_element_located(
-            (By.CSS_SELECTOR, ".sc-feUZmu > button:nth-child(8)")
-        )
-    ).click()
+    wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".sc-feUZmu > button:nth-child(8)"))).click()
 
 
 @then(
@@ -77,13 +66,6 @@ def step_impl(context):
     wait = WebDriverWait(context.browser, 10)
 
     element = wait.until(
-        EC.visibility_of_element_located(
-            (
-                By.XPATH,
-                "//div[@role='status'][contains(.,'Produto enviado com sucesso!!')]",
-            )
-        )
-    )
-    assert (
-        "Produto enviado com sucesso!!" in element.text
-    ), "Erro no cadastro do produto"
+        EC.visibility_of_element_located((By.XPATH,"//div[@role='status'][contains(.,'Produto enviado com sucesso!!')]",)))
+        
+    assert ("Produto enviado com sucesso!!" in element.text), "Erro no cadastro do produto"

@@ -9,9 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 def step_open_page(context):
 
     wait = WebDriverWait(context.browser, 10)
-    button_login = wait.until(
-        EC.visibility_of_element_located((By.CLASS_NAME, "sc-eqUAAy"))
-    )
+    button_login = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "sc-eqUAAy")))
     assert "Iniciar sessão" in button_login.text, "Botão não encontrado"
 
 
@@ -33,9 +31,5 @@ def step_click_button_login(context):
 def step_verify_login(context):
     wait = WebDriverWait(context.browser, 10)
 
-    element = wait.until(
-        EC.visibility_of_element_located(
-            (By.XPATH, "//div[@role='status'][contains(.,'logado com sucesso')]")
-        )
-    )
+    element = wait.until(EC.visibility_of_element_located((By.XPATH, "//div[@role='status'][contains(.,'logado com sucesso')]")))
     assert "logado com sucesso" in element.text, "Login não realizado"

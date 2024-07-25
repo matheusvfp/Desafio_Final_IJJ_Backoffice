@@ -11,9 +11,7 @@ import time
 def step_impl(context):
 
     wait = WebDriverWait(context.browser, 10)
-    nav_bar = wait.until(
-        EC.visibility_of_element_located((By.CLASS_NAME, "NavigationMenuList"))
-    )
+    nav_bar = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "NavigationMenuList")))
 
     assert nav_bar is not None, "Não está na página de Perfil"
 
@@ -25,11 +23,8 @@ def step_impl(context):
     actions = ActionChains(context.browser)
 
     wait.until(EC.invisibility_of_element_located((By.CLASS_NAME, "go3958317564")))
-    perfil_button = wait.until(
-        EC.visibility_of_element_located(
-            (By.XPATH, "//button[contains(@class,'NavigationMenuTrigger')]")
-        )
-    )
+    
+    perfil_button = wait.until(EC.visibility_of_element_located((By.XPATH, "//button[contains(@class,'NavigationMenuTrigger')]")))
     actions.move_to_element(perfil_button).perform()
 
     data_state = perfil_button.get_attribute("data-state")
@@ -42,9 +37,7 @@ def step_impl(context):
     wait = WebDriverWait(context.browser, 10)
     actions = ActionChains(context.browser)
 
-    logout_button = wait.until(
-        EC.visibility_of_element_located((By.XPATH, "//div[text()='LogOut']"))
-    )
+    logout_button = wait.until(EC.visibility_of_element_located((By.XPATH, "//div[text()='LogOut']")))
 
     actions.move_to_element(logout_button).click().perform()
 
@@ -52,7 +45,5 @@ def step_impl(context):
 @then("o sistema deverá redirecionar o usuário para a página de login")
 def step_impl(context):
     wait = WebDriverWait(context.browser, 10)
-    button_login = wait.until(
-        EC.visibility_of_element_located((By.CLASS_NAME, "sc-eqUAAy"))
-    )
+    button_login = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "sc-eqUAAy")))
     assert "Iniciar sessão" in button_login.text, "Botão não encontrado"
