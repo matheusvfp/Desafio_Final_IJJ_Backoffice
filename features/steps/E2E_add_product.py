@@ -37,10 +37,13 @@ def step_add_data_product(context):
 
     file_path = os.path.abspath(os.path.join('media', 'p1.png'))
     
+    categories = ["Roupas", "Calçados", "Acessórios"]
+    category = random.choice(categories)
+    
 
     context.browser.find_element(By.NAME, "name").send_keys(product_name)
     context.browser.find_element(By.NAME, "description").send_keys(product_description)
-    wait.until(EC.visibility_of_element_located((By.XPATH, "//label[contains(.,'Roupas')]"))).click()
+    wait.until(EC.visibility_of_element_located((By.XPATH, f"//label[contains(.,'{category}')]"))).click()
     context.browser.find_element(By.NAME, "price").send_keys(formatted_value)
     context.browser.find_element(By.NAME, "shipment").send_keys(formatted_value)
 
