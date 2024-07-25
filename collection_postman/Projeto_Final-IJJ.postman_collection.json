@@ -1,0 +1,452 @@
+{
+	"info": {
+		"_postman_id": "6a2cf571-d1d4-40cc-b9af-28868f30c991",
+		"name": "Projeto_Final-IJJ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34745851"
+	},
+	"item": [
+		{
+			"name": "Create account",
+			"item": [
+				{
+					"name": "Check API Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create API user",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.collectionVariables.set('NewEmail', pm.variables.replaceIn('{{$randomExampleEmail}}'));\r",
+									"pm.collectionVariables.set('NewPassword', pm.variables.replaceIn('{{$randomPassword}}'));\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificação de usuário criado\", function (){\r",
+									"    var expectMsg = \"Usuário cadastrado com sucesso\";\r",
+									"    pm.expect(jsonData.msg).to.eql(expectMsg);})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{NewEmail}}\",\r\n  \"password\": \"{{NewPassword}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login API user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Resposta deve ter status 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Resposta deve conter uma string com msg, token e user\", function () {\r",
+									"    \r",
+									"    pm.expect(jsonData).to.have.property('msg').that.is.a('string');\r",
+									"    pm.expect(jsonData).to.have.property('token').that.is.a('string');\r",
+									"    pm.expect(jsonData).to.have.property('user').that.is.an('object');\r",
+									"    \r",
+									"    pm.expect(jsonData.user).to.have.property('idusuarios').that.is.a('number');\r",
+									"    pm.expect(jsonData.user).to.have.property('email').that.is.a('string');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificação do email\", function () {\r",
+									"    var expectedEmail = pm.collectionVariables.get(\"NewEmail\")\r",
+									"    pm.expect(jsonData.user.email).to.eql(expectedEmail);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificação de usuário logado\", function (){\r",
+									"    var expectMsg = \"Usuário logado com sucesso!\";\r",
+									"    pm.expect(jsonData.msg).to.eql(expectMsg);})\r",
+									"\r",
+									"pm.test(\"Salvar token JWT\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.collectionVariables.set(\"token\", jsonData.token);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{NewEmail}}\",\r\n  \"password\": \"{{NewPassword}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Criação de conta"
+		},
+		{
+			"name": "Product registration",
+			"item": [
+				{
+					"name": "Create API product",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set('NameProduct', pm.variables.replaceIn('{{$randomProductName}}'));\r",
+									"pm.collectionVariables.set('AdjectiveProduct', pm.variables.replaceIn('{{$randomProductAdjective}}'));\r",
+									"pm.collectionVariables.set('PriceProduct', pm.variables.replaceIn('{{$randomPrice}}'));\r",
+									"pm.collectionVariables.set('CategoryProduct', pm.variables.replaceIn('{{$randomDepartment}}'));\r",
+									"pm.collectionVariables.set('ShipmentProduct', pm.variables.replaceIn('{{$randomPrice}}'));\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"verificação do produto cadastrado\", function (){\r",
+									"    mensagem = \"Produto cadastrado com sucesso!\"\r",
+									"    pm.expect(jsonData).to.eql(mensagem);\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "'{{NameProduct}}'",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "'{{AdjectiveProduct}}'",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "'{{PriceProduct}}'",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "'{{CategoryProduct}}'",
+									"type": "text"
+								},
+								{
+									"key": "shipment",
+									"value": "'{{ShipmentProduct}}'",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/Matheus/Downloads/p1.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List API product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Resposta deve ter status 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Salvar ID elemento\", function(){\r",
+									"     var productId = jsonData[0].idprodutos;\r",
+									"     pm.collectionVariables.set('IDproduct', productId) \r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete API product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"verificação do produto deletado\", function (){\r",
+									"    mensagem = \"Produto deletado com sucesso!\"\r",
+									"    pm.expect(jsonData).to.eql(mensagem);\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/{{IDproduct}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{IDproduct}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "Email",
+			"value": ""
+		},
+		{
+			"key": "Password",
+			"value": ""
+		},
+		{
+			"key": "UserEmail",
+			"value": ""
+		},
+		{
+			"key": "UserPassword",
+			"value": ""
+		},
+		{
+			"key": "NewEmail",
+			"value": ""
+		},
+		{
+			"key": "NewPassword",
+			"value": ""
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "NameProduct",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "AdjectiveProduct",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "PriceProduct",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "CategoryProduct",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "ShipmentProduct",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "ImageProduct",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "IDproduct",
+			"value": ""
+		}
+	]
+}
