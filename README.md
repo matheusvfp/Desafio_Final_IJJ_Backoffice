@@ -1,9 +1,7 @@
-# Backoffice JogaJunto 🛒
-
+# Backoffice JogaJunto  
 <div align="center">
-  <picture>
-    
-  </picture>
+    <img src="https://github.com/matheusvfp/Squad1-IJJ/assets/65199677/3782a146-deb0-43eb-847d-6099ba7f506d" alt="Image 1" style="width: 213px; height: auto;">
+    <img src="https://github.com/matheusvfp/Squad1-IJJ/assets/65199677/1770a178-1d2a-434a-b12a-3ea2b3079e22" alt="Image 2" style="width: 300px; height: auto;">
 </div>
 <br>
 
@@ -16,7 +14,7 @@ Os testes automatizados foram desenvolvidos utilizando `Python`, `Selenium Webdr
 A utilização do Behave nos permite que os casos de testes estejam em Gherkin
 
 ## Testes E2E
-Foram desenvolvidos testes automatizados das seguintes funcionalidades de do sistema 
+Foram desenvolvidos testes automatizados das seguintes funcionalidades do sistema 
  - Criação de Usuário
  - Login
  - Logout
