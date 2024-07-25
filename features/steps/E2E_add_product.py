@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from faker import Faker
 import random
+import os
 
 
 @given("que o usuário está na página de cadastro de produtos")
@@ -39,7 +40,7 @@ def step_impl(context):
     value = fake.random_number(digits=2)
     formatted_value = f"{value},00"
 
-    file_path = r"C:\Users\Matheus\Downloads\p1.png"
+    file_path = os.path.abspath(os.path.join('media', 'p1.png'))
     categories = ["Roupas", "Calçados", "Acessórios"]
 
     category = random.choice(categories)
