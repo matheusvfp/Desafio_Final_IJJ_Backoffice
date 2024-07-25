@@ -17,7 +17,7 @@ Os testes automatizados foram desenvolvidos utilizando `Python`, `Selenium Webdr
 A utilização do Behave nos permite que os casos de testes estejam em Gherkin
 
 ## Testes E2E
-Foram desenvolvidos testes automatizados das seguintes funcionalidades de do sistema 
+Foram desenvolvidos testes automatizados das seguintes funcionalidades do sistema 
  - Criação de Usuário
  - Login
  - Logout
