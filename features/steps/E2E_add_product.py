@@ -9,7 +9,7 @@ import os
 
 
 @given("que o usuário está na página de cadastro de produtos")
-def step_impl(context):
+def step_page_register_product(context):
     username = "usuario@example.com"
     password = "senha123"
 
@@ -20,7 +20,7 @@ def step_impl(context):
 
 
 @when('o usuário clica no botão "Adicionar"')
-def step_impl(context):
+def step_click_add_button(context):
     wait = WebDriverWait(context.browser, 10)
 
     wait.until(
@@ -28,7 +28,7 @@ def step_impl(context):
 
 
 @when("preenche o formulário com os dados do produto")
-def step_impl(context):
+def step_add_data_product(context):
     fake = Faker()
     wait = WebDriverWait(context.browser, 10)
 
@@ -53,19 +53,16 @@ def step_impl(context):
 
 
 @then('o usuário clica no botão "Enviar" para registrar o novo produto')
-def step_impl(context):
+def step_click_register_product(context):
     wait = WebDriverWait(context.browser, 10)
 
     wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".sc-feUZmu > button:nth-child(8)"))).click()
 
 
-@then(
-    "o sistema deve exibir uma mensagem de sucesso indicando que o produto foi cadastrado com sucesso"
-)
-def step_impl(context):
+@then("o sistema deve exibir uma mensagem de sucesso indicando que o produto foi cadastrado com sucesso")
+def step_sucess_mensage(context):
     wait = WebDriverWait(context.browser, 10)
 
-    element = wait.until(
-        EC.visibility_of_element_located((By.XPATH,"//div[@role='status'][contains(.,'Produto enviado com sucesso!!')]",)))
-        
+    element = wait.until(EC.visibility_of_element_located((By.XPATH,"//div[@role='status'][contains(.,'Produto enviado com sucesso!!')]",)))
+
     assert ("Produto enviado com sucesso!!" in element.text), "Erro no cadastro do produto"

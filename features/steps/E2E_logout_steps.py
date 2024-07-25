@@ -8,7 +8,7 @@ import time
 
 
 @given("que o usuário esteja logado no sistema")
-def step_impl(context):
+def step_login_user(context):
 
     wait = WebDriverWait(context.browser, 10)
     nav_bar = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "NavigationMenuList")))
@@ -17,7 +17,7 @@ def step_impl(context):
 
 
 @when("quando clicar em Perfil na navbar")
-def step_impl(context):
+def step_click_navbar_profile(context):
 
     wait = WebDriverWait(context.browser, 10)
     actions = ActionChains(context.browser)
@@ -33,7 +33,7 @@ def step_impl(context):
 
 
 @when("clicar no Logout no drop list")
-def step_impl(context):
+def step_click_logout_profile(context):
     wait = WebDriverWait(context.browser, 10)
     actions = ActionChains(context.browser)
 
@@ -43,7 +43,7 @@ def step_impl(context):
 
 
 @then("o sistema deverá redirecionar o usuário para a página de login")
-def step_impl(context):
+def step_redirect_login_page(context):
     wait = WebDriverWait(context.browser, 10)
     button_login = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "sc-eqUAAy")))
     assert "Iniciar sessão" in button_login.text, "Botão não encontrado"
